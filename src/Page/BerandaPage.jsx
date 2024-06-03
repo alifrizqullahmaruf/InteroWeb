@@ -1,9 +1,10 @@
+import SidebarBeranda from "../Components/SidebarBeranda"
 
 
 const BerandaPage = () => {
   return (
     <>
-    <h1>Beranda</h1>
+    <SidebarBeranda />
     </>
   )
 }
