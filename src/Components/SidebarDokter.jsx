@@ -9,7 +9,7 @@ import {
   Settings,
 } from "lucide-react";
 
-const SidebarProfil = () => {
+const SidebarDokter = () => {
   const navigate = useNavigate(); // Get the navigate function
 
   const handleClick = (route) => {
@@ -26,6 +26,8 @@ const SidebarProfil = () => {
         <SidebarItem
           icon={<UserCircle size={20} />}
           text="Daftar dokter"
+          active
+          alert
           onClick={() => handleClick("/daftarDokter")}
         />
         <SidebarItem
@@ -42,8 +44,6 @@ const SidebarProfil = () => {
           icon={<UserCircle size={20} />}
           text="Profil"
           onClick={() => handleClick("/profil")}
-          active
-          alert
         />
         <SidebarItem
           icon={<Boxes size={20} />}
@@ -63,4 +63,4 @@ const SidebarProfil = () => {
   );
 };
 
-export default SidebarProfil;
+export default SidebarDokter;

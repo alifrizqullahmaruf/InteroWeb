@@ -80,19 +80,22 @@ const BerandaPage = () => {
                             #
                           </th>
                           <th scope="col" className="px-6 py-4">
+                            Waktu Konsul
+                          </th>
+                          <th scope="col" className="px-6 py-4">
                             Nama Pasien
                           </th>
                           <th scope="col" className="px-6 py-4">
-                            Umur
+                            Nama Dokter
+                          </th>
+                          <th scope="col" className="px-6 py-4">
+                            Penyakit
+                          </th>
+                          <th scope="col" className="px-6 py-4">
+                            Obat
                           </th>
                           <th scope="col" className="px-6 py-4">
                             Alamat
-                          </th>
-                          <th scope="col" className="px-6 py-4">
-                            Jenis Kelamin
-                          </th>
-                          <th scope="col" className="px-6 py-4">
-                            No. Telephone
                           </th>
                         </tr>
                       </thead>
@@ -106,19 +109,22 @@ const BerandaPage = () => {
                               {index + 1}
                             </td>
                             <td className="whitespace-nowrap px-6 py-4">
+                              29 Mei 2024
+                            </td>
+                            <td className="whitespace-nowrap px-6 py-4">
                               {patient.Nama_Pasien}
                             </td>
                             <td className="whitespace-nowrap px-6 py-4">
-                              {patient.Umur}
+                              {patient.Nama_Dokter}
+                            </td>
+                            <td className="whitespace-nowrap px-6 py-4">
+                              {patient.Nama_Penyakit}
+                            </td>
+                            <td className="whitespace-nowrap px-6 py-4">
+                              {patient.Nama_Obat}
                             </td>
                             <td className="whitespace-nowrap px-6 py-4">
                               {patient.Alamat}
-                            </td>
-                            <td className="whitespace-nowrap px-6 py-4">
-                              {patient.Jenis_Kelamin}
-                            </td>
-                            <td className="whitespace-nowrap px-6 py-4">
-                              {patient.Telepon_Pasien}
                             </td>
                           </tr>
                         ))}

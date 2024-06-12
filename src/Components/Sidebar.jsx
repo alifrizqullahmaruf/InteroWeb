@@ -12,9 +12,11 @@ const Sidebar = ({ children }) => {
     <div className="h-screen">
       <nav className="flex flex-col h-full bg-white border-r shadow-sm w-fit">
         <div className="flex items-center justify-between p-4 pb-2">
-          <h1 className={`overflow-hidden transition-all ${
+          <h1
+            className={`overflow-hidden transition-all ${
               expanded ? "w-32 text-3xl text-blue-500 font-bold" : "w-0"
-            }`}>
+            }`}
+          >
             SRP
           </h1>
 
@@ -43,7 +45,7 @@ const Sidebar = ({ children }) => {
                 alifrizm@gmail.com
               </span>
             </div>
-            <MoreVertical size={20} className="flex justify-end"/>
+            <MoreVertical size={20} className="flex justify-end" />
           </div>
         </div>
       </nav>
@@ -51,7 +53,7 @@ const Sidebar = ({ children }) => {
   );
 };
 
-export function SidebarItem({ icon, text, active, alert ,onClick}) {
+export function SidebarItem({ icon, text, active, alert, onClick }) {
   const { expanded } = useContext(SidebarContext);
 
   return (

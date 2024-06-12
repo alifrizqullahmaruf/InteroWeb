@@ -1,5 +1,5 @@
-import logo from '/src/assets/3dLogo.png';
-import { useNavigate } from 'react-router-dom';
+import logo from "/src/assets/3dLogo.png";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const navigate = useNavigate(); // Get the navigate function
@@ -35,12 +35,19 @@ const LoginPage = () => {
                 Forgot password?
               </a>
             </div>
-            <button className="w-full py-3 mb-6 text-white bg-blue-500 rounded-lg hover:bg-blue-600" onClick={()=> handleClick('/beranda')}>
+            <button
+              className="w-full py-3 mb-6 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+              onClick={() => handleClick("/beranda")}
+            >
               LOGIN
             </button>
             <div className="flex justify-center space-x-2">
               <p>Don&apos;t have an account?</p>
-              <a href="#" className="text-blue-500 hover:underline" onClick={()=> handleClick('/register')}>
+              <a
+                href="#"
+                className="text-blue-500 hover:underline"
+                onClick={() => handleClick("/register")}
+              >
                 Sign up now!
               </a>
             </div>
