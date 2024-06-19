@@ -1,67 +1,70 @@
-import SidebarObat from "../Components/SidebarObat";
+import SidebarDokter from "../Components/SidebarDokter";
 import { useEffect, useState, useCallback } from "react";
 import Modal from "react-modal";
 
-const BASE_URL = "http://127.0.0.1:8000/kesehatan.php?table=obat";
+const BASE_URL = "http://127.0.0.1:8000/kesehatan.php?table=dokter";
 
 // Set the app element for react-modal
 Modal.setAppElement("#root");
 
-const DaftarObatPage = () => {
-  const [obats, setObats] = useState([]);
+const DaftarDokter = () => {
+  const [dokters, setDokters] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [currentObat, setCurrentObat] = useState(null);
-  const [newObat, setNewObat] = useState({
-    nama_Obat: "",
-    deskripsi_Obat: "",
+  const [currentDokter, setCurrentDokter] = useState(null);
+  const [newDokter, setNewDokter] = useState({
+    nama: "",
+    spesialisasi: "",
+    no_Telepon: "",
   });
 
-  const fetchObats = useCallback(async () => {
+  const fetchDokters = useCallback(async () => {
     try {
       const response = await fetch(BASE_URL);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      const obat = await response.json();
-      setObats(obat);
+      const dokter = await response.json();
+      setDokters(dokter);
     } catch (error) {
-      console.error("Failed to fetch obats:", error);
+      console.error("Failed to fetch doctors:", error);
     }
   }, []);
 
   useEffect(() => {
-    fetchObats();
-  }, [fetchObats]);
+    fetchDokters();
+  }, [fetchDokters]);
 
   const openModal = () => {
     setModalIsOpen(true);
     setIsEditing(false);
-    setNewObat({
-      nama_Obat: "",
-      deskripsi_Obat: "",
+    setNewDokter({
+      nama: "",
+      spesialisasi: "",
+      no_Telepon: "",
     });
   };
 
-  const openEditModal = (obat) => {
+  const openEditModal = (dokter) => {
     setModalIsOpen(true);
     setIsEditing(true);
-    setCurrentObat(obat);
-    setNewObat({
-      nama_Obat: obat.nama_Obat,
-      deskripsi_Obat: obat.deskripsi_Obat,
+    setCurrentDokter(dokter);
+    setNewDokter({
+      nama: dokter.nama,
+      spesialisasi: dokter.spesialisasi,
+      no_Telepon: dokter.no_Telepon,
     });
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
-    setCurrentObat(null);
+    setCurrentDokter(null);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewObat((prevObat) => ({
-      ...prevObat,
+    setNewDokter((prevDokter) => ({
+      ...prevDokter,
       [name]: value,
     }));
   };
@@ -69,8 +72,8 @@ const DaftarObatPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    Object.keys(newObat).forEach((key) => {
-      formData.append(key, newObat[key]);
+    Object.keys(newDokter).forEach((key) => {
+      formData.append(key, newDokter[key]);
     });
 
     try {
@@ -81,10 +84,10 @@ const DaftarObatPage = () => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      await fetchObats(); // Refetch obats after successful add
+      await fetchDokters(); // Refetch doctors after successful add
       closeModal();
     } catch (error) {
-      console.error("Failed to add new obat:", error);
+      console.error("Failed to add new doctor:", error);
     }
   };
 
@@ -92,12 +95,13 @@ const DaftarObatPage = () => {
     e.preventDefault();
 
     const requestBody = new URLSearchParams();
-    requestBody.append("nama_Obat", newObat.nama_Obat);
-    requestBody.append("deskripsi_Obat", newObat.deskripsi_Obat);
+    Object.keys(newDokter).forEach((key) => {
+      requestBody.append(key, newDokter[key]);
+    });
 
     try {
       const response = await fetch(
-        `${BASE_URL}&ID_Obat=${currentObat.ID_Obat}`,
+        `${BASE_URL}&ID_Dokter=${currentDokter.ID_Dokter}`,
         {
           method: "PUT",
           headers: {
@@ -110,16 +114,16 @@ const DaftarObatPage = () => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      await fetchObats(); // Refetch obats after successful edit
+      await fetchDokters(); // Refetch doctors after successful edit
       closeModal();
     } catch (error) {
-      console.error("Failed to update obat:", error);
+      console.error("Failed to update doctor:", error);
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`${BASE_URL}&ID_Obat=${id}`, {
+      const response = await fetch(`${BASE_URL}&ID_Dokter=${id}`, {
         method: "DELETE",
       });
 
@@ -127,19 +131,19 @@ const DaftarObatPage = () => {
         throw new Error("Network response was not ok");
       }
 
-      await fetchObats(); // Refetch obats after successful delete
+      await fetchDokters(); // Refetch doctors after successful delete
     } catch (error) {
-      console.error("Failed to delete obat:", error);
+      console.error("Failed to delete doctor:", error);
     }
   };
 
   return (
     <div className="flex">
-      <SidebarObat />
+      <SidebarDokter />
 
       <div className="flex flex-col w-full bg-slate-100">
         <div className="flex justify-between items-center mb-4 p-4 ml-10">
-          <h1 className="text-2xl font-bold">Daftar Obat</h1>
+          <h1 className="text-2xl font-bold">Daftar Dokter</h1>
           <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center mr-10">
             <img
               src="path_to_profile_photo.jpg"
@@ -181,7 +185,7 @@ const DaftarObatPage = () => {
                 className="bg-blue-500 text-white px-4 py-2 rounded"
                 onClick={openModal}
               >
-                Tambah Obat
+                Tambah Dokter
               </button>
             </div>
           </div>
@@ -193,10 +197,13 @@ const DaftarObatPage = () => {
                   #
                 </th>
                 <th scope="col" className="px-4 py-2 text-lg">
-                  Nama Obat
+                  Nama Dokter
                 </th>
                 <th scope="col" className="px-4 py-2 text-lg">
-                  Deskripsi Obat
+                  Spesialisasi Dokter
+                </th>
+                <th scope="col" className="px-4 py-2 text-lg">
+                  No. Telepon
                 </th>
                 <th scope="col" className="px-4 py-2 text-lg">
                   Aksi
@@ -205,24 +212,25 @@ const DaftarObatPage = () => {
             </thead>
 
             <tbody>
-              {obats.map((obat, index) => (
+              {dokters.map((dokter, index) => (
                 <tr
-                  key={`${obat.ID_Obat}-${index}`} // Ensure each child has a unique key prop
+                  key={dokter.ID_Dokter}
                   className="border-b border-neutral-200 dark:border-white/10"
                 >
                   <td className="whitespace-nowrap px-6 py-4 font-medium">
                     {index + 1}
                   </td>
+                  <td className="whitespace-nowrap px-6 py-4">{dokter.nama}</td>
                   <td className="whitespace-nowrap px-6 py-4">
-                    {obat.nama_Obat}
+                    {dokter.spesialisasi}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4">
-                    {obat.deskripsi_Obat}
+                    {dokter.no_Telepon}
                   </td>
                   <td className="whitespace-nowrap py-4 flex justify-evenly">
                     <button
                       className="text-blue-500 hover:text-blue-700"
-                      onClick={() => openEditModal(obat)}
+                      onClick={() => openEditModal(dokter)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -241,7 +249,7 @@ const DaftarObatPage = () => {
                     </button>
                     <button
                       className="text-red-500 hover:text-red-700"
-                      onClick={() => handleDelete(obat.ID_Obat)}
+                      onClick={() => handleDelete(dokter.ID_Dokter)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -261,44 +269,51 @@ const DaftarObatPage = () => {
                   </td>
                 </tr>
               ))}
-              {/* Tambahkan baris lain sesuai kebutuhan */}
             </tbody>
           </table>
         </div>
-      </div>
 
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel={isEditing ? "Edit Obat" : "Tambah Obat"}
-        // className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-        overlayClassName="fixed inset-0 bg-black bg-opacity-50"
-      >
-        <div className="bg-white p-6 rounded-lg">
-          <h2 className="text-2xl font-bold mb-4">
-            {isEditing ? "Edit Obat" : "Tambah Obat"}
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          contentLabel="Dokter Modal"
+        >
+          <h2 className="text-2xl mb-4">
+            {isEditing ? "Edit Dokter" : "Tambah Dokter"}
           </h2>
           <form onSubmit={isEditing ? handleEditSubmit : handleSubmit}>
             <div className="mb-4">
-              <label className="block text-lg mb-2">Nama Obat</label>
+              <label className="block text-lg mb-2">Nama:</label>
               <input
                 type="text"
-                name="nama_Obat"
-                value={newObat.nama_Obat}
+                name="nama"
+                value={newDokter.nama}
                 onChange={handleChange}
-                className="w-full border border-gray-300 px-4 py-2 rounded-md"
+                className="border border-gray-300 p-2 w-full"
                 required
               />
             </div>
             <div className="mb-4">
-              <label className="block text-lg mb-2">Deskripsi Obat</label>
-              <textarea
-                name="deskripsi_Obat"
-                value={newObat.deskripsi_Obat}
+              <label className="block text-lg mb-2">Spesialisasi:</label>
+              <input
+                type="text"
+                name="spesialisasi"
+                value={newDokter.spesialisasi}
                 onChange={handleChange}
-                className="w-full border border-gray-300 px-4 py-2 rounded-md"
+                className="border border-gray-300 p-2 w-full"
                 required
-              ></textarea>
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-lg mb-2">No. Telepon:</label>
+              <input
+                type="text"
+                name="no_Telepon"
+                value={newDokter.no_Telepon}
+                onChange={handleChange}
+                className="border border-gray-300 p-2 w-full"
+                required
+              />
             </div>
             <div className="flex justify-end">
               <button
@@ -316,10 +331,10 @@ const DaftarObatPage = () => {
               </button>
             </div>
           </form>
-        </div>
-      </Modal>
+        </Modal>
+      </div>
     </div>
   );
 };
 
-export default DaftarObatPage;
+export default DaftarDokter;
