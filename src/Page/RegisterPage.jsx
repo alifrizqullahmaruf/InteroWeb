@@ -1,6 +1,6 @@
-import React from 'react';
-import logo from '/src/assets/3dLogo.png';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import logo from "/src/assets/3dLogo.png";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const navigate = useNavigate(); // Get the navigate function
@@ -36,12 +36,19 @@ const RegisterPage = () => {
               placeholder="Confirm Password"
               className="px-4 mb-6 border-2 rounded-lg h-14"
             />
-            <button className="w-full py-3 mb-6 text-white bg-blue-500 rounded-lg hover:bg-blue-600" onClick={()=> handleRegisterClick('/')}>
+            <button
+              className="w-full py-3 mb-6 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+              onClick={() => handleRegisterClick("/")}
+            >
               REGISTER
             </button>
             <div className="flex justify-center space-x-2">
               <p>Already have an account?</p>
-              <a href="#" className="text-blue-500 hover:underline" onClick={()=> handleRegisterClick('/')}>
+              <a
+                href="#"
+                className="text-blue-500 hover:underline"
+                onClick={() => handleRegisterClick("/")}
+              >
                 Log in now!
               </a>
             </div>
